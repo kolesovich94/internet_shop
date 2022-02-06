@@ -3,7 +3,7 @@ import {
   changeSearchCatalog,
   getItems,
   cleanItems,
-} from "../redux/actionCreators";
+} from "../redux/items/actions";
 
 export default function SearchCatalog(props) {
   const dispatch = useDispatch();

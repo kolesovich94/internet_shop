@@ -1,4 +1,4 @@
-import { SALES_LOADING, SALES_ERROR, SALES_OK } from "./actionTypes";
+import { SALES_LOADING, SALES_ERROR, SALES_OK } from "./types";
 
 const initialState = {
   sales: [],
@@ -10,18 +10,13 @@ export default function salesReducer(state = initialState, action) {
   switch (action.type) {
     case SALES_LOADING:
       const { loading } = action.payload;
-      state.loading = loading;
-      return { ...state };
+      return { ...state, loading: loading };
     case SALES_ERROR:
       const { error } = action.payload;
-      state.error = error;
-      state.loading = false;
-      return { ...state };
+      return { ...state, error: error, loading: false };
     case SALES_OK:
       const { sales } = action.payload;
-      state.sales = sales;
-      state.loading = false;
-      return { ...state };
+      return { ...state, sales: sales, loading: false };
     default:
       return state;
   }

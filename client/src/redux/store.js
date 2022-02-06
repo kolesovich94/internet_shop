@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import headerReducer from "./headerReducer";
-import salesReducer from "./salesReducer";
-import itemsReducer from "./itemsReducer";
-import categoriesReducer from "./categoriesReducer";
+import headerReducer from "./header/reducer";
+import salesReducer from "./sales/reducer";
+import itemsReducer from "./items/reducer";
+import categoriesReducer from "./categories/reducer";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({

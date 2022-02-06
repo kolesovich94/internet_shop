@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getSales } from "../redux/actionCreators";
+import { getSales } from "../redux/sales/actions";
 import Spinner from "../components/Common/Spinner";
 import Error from "../components/Common/Error";
 import CatalogElement from "./CatalogElement";

@@ -1,4 +1,4 @@
-import { CHANGE_SEARCH_HEADER } from "./actionTypes";
+import { CHANGE_SEARCH_HEADER } from "./types";
 
 const initialState = {
   isVisible: false,

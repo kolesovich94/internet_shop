@@ -1,9 +1,9 @@
 import {
-  changeSearchHeader,
   changeSearchCatalog,
   cleanItems,
   getItems,
-} from "../redux/actionCreators";
+} from "../redux/items/actions";
+import { changeSearchHeader } from "../redux/header/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

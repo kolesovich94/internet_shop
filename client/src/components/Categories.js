@@ -1,10 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import {
-  getCategories,
-  changeCategory,
-  getItems,
-} from "../redux/actionCreators";
+import { getItems } from "../redux/items/actions";
+import { getCategories, changeCategory } from "../redux/categories/actions";
 import Spinner from "../components/Common/Spinner";
 import Error from "../components/Common/Error";
 

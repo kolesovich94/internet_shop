@@ -1,0 +1,5 @@
+export const CHANGE_SEARCH_CATALOG = "CHANGE_SEARCH_CATALOG";
+export const CLEAN_ITEMS = "CLEAN_ITEMS";
+export const ITEMS_LOADING = "ITEMS_LOADING";
+export const ITEMS_ERROR = "ITEMS_ERROR";
+export const ITEMS_OK = "ITEMS_OK";

@@ -1,8 +1,4 @@
-import {
-  CATEGORIES_LOADING,
-  CATEGORIES_ERROR,
-  CATEGORIES_OK,
-} from "./actionTypes";
+import { CATEGORIES_LOADING, CATEGORIES_ERROR, CATEGORIES_OK } from "./types";
 
 const initialState = {
   categories: [],
@@ -14,18 +10,13 @@ export default function categoriesReducer(state = initialState, action) {
   switch (action.type) {
     case CATEGORIES_LOADING:
       const { loading } = action.payload;
-      state.loading = loading;
-      return { ...state };
+      return { ...state, loading: loading };
     case CATEGORIES_ERROR:
       const { error } = action.payload;
-      state.error = error;
-      state.loading = false;
-      return { ...state };
+      return { ...state, error: error, loading: false };
     case CATEGORIES_OK:
       const { categories } = action.payload;
-      state.categories = categories;
-      state.loading = false;
-      return { ...state };
+      return { ...state, categories: categories, loading: false };
     default:
       return state;
   }

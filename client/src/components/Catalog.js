@@ -4,7 +4,7 @@ import {
   getItems,
   changeSearchCatalog,
   cleanItems,
-} from "../redux/actionCreators";
+} from "../redux/items/actions";
 import Spinner from "../components/Common/Spinner";
 import Error from "../components/Common/Error";
 import CatalogElement from "./CatalogElement";
