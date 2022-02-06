@@ -6,6 +6,8 @@ import {
   ITEMS_OK,
 } from "./types";
 
+const qs = require("qs");
+
 export const changeSearchCatalog = (search) => ({
   type: CHANGE_SEARCH_CATALOG,
   payload: { search },
@@ -28,14 +30,14 @@ const itemsError = (error) => ({
 
 const itemsOk = (items) => ({ type: ITEMS_OK, payload: { items } });
 
-export const getItems = (category, offset, search) => (dispatch, _getState) => {
+export const getItems = (offset) => (dispatch, _getState) => {
   dispatch(itemsLoading(true));
 
-  const qs = require("qs");
+  const paramsObj = qs.parse(window.location.search.slice(1));
   const params = qs.stringify({
-    categoryId: category,
+    categoryId: paramsObj.category,
+    q: paramsObj.search,
     offset: offset,
-    q: search,
   });
 
   fetch(`${process.env.REACT_APP_BACKEND_URL}/items?${params}`)

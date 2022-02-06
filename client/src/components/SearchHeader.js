@@ -3,12 +3,16 @@ import {
   cleanItems,
   getItems,
 } from "../redux/items/actions";
-import { changeSearchHeader } from "../redux/header/actions";
+import { changeSearchHeader, cleanSearchHeader } from "../redux/header/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+const qs = require("qs");
+
 export default function SearchHeader() {
   const dispatch = useDispatch();
+
+  let paramsObj = qs.parse(window.location.search.slice(1));
   const navigate = useNavigate();
 
   const { isVisible, searchText } = useSelector((store) => store.headerReducer);
@@ -19,11 +23,15 @@ export default function SearchHeader() {
     } else {
       dispatch(changeSearchCatalog(searchText));
       dispatch(cleanItems());
+
       if (window.location.pathname.match("catalog")) {
-        dispatch(getItems(null, 0, searchText));
+        paramsObj.search = searchText;
+        navigate(`${window.location.pathname}?${qs.stringify(paramsObj)}`);
+        dispatch(getItems());
       } else {
-        navigate("/catalog");
+        navigate(`/catalog?${qs.stringify({ search: searchText })}`);
       }
+      dispatch(cleanSearchHeader());
     }
   };
 

@@ -1,10 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import {
-  getItems,
-  changeSearchCatalog,
-  cleanItems,
-} from "../redux/items/actions";
+import { getItems, cleanItems } from "../redux/items/actions";
 import Spinner from "../components/Common/Spinner";
 import Error from "../components/Common/Error";
 import CatalogElement from "./CatalogElement";
@@ -14,22 +10,18 @@ import Categories from "./Categories";
 export default function Catalog(props) {
   const dispatch = useDispatch();
 
-  const { items, loading, error, activeCategory, offset, search, loadMore } =
-    useSelector((store) => store.itemsReducer);
+  const { items, loading, error, offset, loadMore } = useSelector(
+    (store) => store.itemsReducer
+  );
 
   useEffect(() => {
-    if (props.withSearch) {
-      dispatch(getItems(null, 0, search));
-    } else {
-      dispatch(changeSearchCatalog(""));
-      dispatch(cleanItems());
-      dispatch(getItems());
-    }
+    dispatch(cleanItems());
+    dispatch(getItems());
     // eslint-disable-next-line
   }, [props]);
 
   const handleClick = () => {
-    dispatch(getItems(activeCategory, offset, search));
+    dispatch(getItems(offset));
   };
 
   return (

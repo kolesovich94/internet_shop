@@ -37,7 +37,6 @@ export const getCategories = () => (dispatch, _getState) => {
     .then((data) => {
       data.unshift({ id: 0, title: "Все" });
       dispatch(categoriesOk(data));
-      dispatch(changeCategory());
     })
     .catch((error) => {
       dispatch(categoriesError(error.message));

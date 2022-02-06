@@ -1,26 +1,34 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getItems } from "../redux/items/actions";
-import { getCategories, changeCategory } from "../redux/categories/actions";
+import { useNavigate } from "react-router-dom";
+import { getItems, cleanItems } from "../redux/items/actions";
+import { changeCategory, getCategories } from "../redux/categories/actions";
 import Spinner from "../components/Common/Spinner";
 import Error from "../components/Common/Error";
 
-export default function Categories(props) {
+const qs = require("qs");
+
+export default function Categories() {
   const dispatch = useDispatch();
 
-  const { categories, loading, error } = useSelector(
+  let paramsObj = qs.parse(window.location.search.slice(1));
+  const navigate = useNavigate();
+
+  const { categories, loading, error, active } = useSelector(
     (store) => store.categoriesReducer
   );
 
-  const { activeCategory, search } = useSelector((store) => store.itemsReducer);
-
   const handleClick = (evt, id) => {
     evt.preventDefault();
+    paramsObj.category = id;
+    navigate(`${window.location.pathname}?${qs.stringify(paramsObj)}`);
+    dispatch(cleanItems());
+    dispatch(getItems());
     dispatch(changeCategory(id));
-    dispatch(getItems(id, 0, search));
   };
 
   useEffect(() => {
+    dispatch(changeCategory(parseInt(paramsObj.category)));
     dispatch(getCategories());
     // eslint-disable-next-line
   }, []);
@@ -36,7 +44,7 @@ export default function Categories(props) {
         categories.map((e) => (
           <li className="nav-item" key={e.id}>
             <a
-              className={`nav-link ${e.id === activeCategory ? "active" : ""}`}
+              className={`nav-link ${e.id === active ? "active" : ""}`}
               onClick={(evt) => handleClick(evt, e.id)}
               href="#"
             >
