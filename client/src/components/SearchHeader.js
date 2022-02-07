@@ -24,7 +24,7 @@ export default function SearchHeader() {
       dispatch(changeSearchCatalog(searchText));
       dispatch(cleanItems());
 
-      if (window.location.pathname.match("catalog")) {
+      if (window.location.pathname.match(/\/catalog\/?$/)) {
         paramsObj.search = searchText;
         navigate(`${window.location.pathname}?${qs.stringify(paramsObj)}`);
         dispatch(getItems());

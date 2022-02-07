@@ -32,7 +32,7 @@ export default function CartPage() {
               </td>
             </tr>
             <tr>
-              <td colspan="5" className="text-right">
+              <td colSpan="5" className="text-right">
                 Общая стоимость
               </td>
               <td>34 000 руб.</td>
@@ -45,7 +45,7 @@ export default function CartPage() {
         <div className="card" style={{ maxWidth: "30rem", margin: "0 auto" }}>
           <form className="card-body">
             <div className="form-group">
-              <label for="phone">Телефон</label>
+              <label htmlFor="phone">Телефон</label>
               <input
                 className="form-control"
                 id="phone"
@@ -53,7 +53,7 @@ export default function CartPage() {
               />
             </div>
             <div className="form-group">
-              <label for="address">Адрес доставки</label>
+              <label htmlFor="address">Адрес доставки</label>
               <input
                 className="form-control"
                 id="address"
@@ -66,7 +66,7 @@ export default function CartPage() {
                 className="form-check-input"
                 id="agreement"
               />
-              <label className="form-check-label" for="agreement">
+              <label className="form-check-label" htmlFor="agreement">
                 Согласен с правилами доставки
               </label>
             </div>
