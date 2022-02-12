@@ -11,7 +11,7 @@ const initialState = {
   loading: true,
   error: null,
   kolvo: 1,
-  size: null,
+  size: "",
 };
 
 export default function itemIdReducer(state = initialState, action) {

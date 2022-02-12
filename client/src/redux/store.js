@@ -4,6 +4,8 @@ import salesReducer from "./sales/reducer";
 import itemsReducer from "./items/reducer";
 import itemIdReducer from "./itemId/reducer";
 import categoriesReducer from "./categories/reducer";
+import orderReducer from "./order/reducer";
+import cartReducer from "./cart/reducer";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   itemsReducer,
   itemIdReducer,
   categoriesReducer,
+  orderReducer,
+  cartReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

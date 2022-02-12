@@ -1,16 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { changeItemId, cleanItemId, getItemId } from "../redux/itemId/actions";
-import { NavLink } from "react-router-dom";
+import { getCartItems, addToCart } from "../redux/cart/actions";
 import Spinner from "../components/Common/Spinner";
 import Error from "../components/Common/Error";
 
 export default function Item() {
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const { item, loading, error, kolvo, size } = useSelector(
     (store) => store.itemIdReducer
   );
+
+  const { cartItems } = useSelector((store) => store.cartReducer);
 
   let sizesAvalible =
     item && item.sizes ? item.sizes.filter((e) => e.avalible) : [];
@@ -34,6 +39,11 @@ export default function Item() {
       newKol--;
     }
     dispatch(changeItemId("kolvo", newKol));
+  };
+
+  const handleClickCart = (e) => {
+    dispatch(addToCart(item, size, kolvo));
+    navigate("/cart");
   };
 
   return (
@@ -87,9 +97,9 @@ export default function Item() {
                       <span
                         style={{ cursor: "pointer" }}
                         key={idx}
-                        onClick={() => handleClickSize(idx)}
+                        onClick={() => handleClickSize(e.size)}
                         className={`catalog-item-size ${
-                          idx === size ? "selected" : ""
+                          e.size === size ? "selected" : ""
                         }`}
                       >
                         {e.size}
@@ -124,12 +134,14 @@ export default function Item() {
               </div>
               {sizesAvalible.length > 0 ? (
                 <>
-                  <NavLink
-                    to="/cart"
-                    className="btn btn-danger btn-block btn-lg"
+                  <button
+                    className={`btn btn-danger btn-block btn-lg ${
+                      size === "" ? "disabled" : ""
+                    }`}
+                    onClick={handleClickCart}
                   >
                     В корзину
-                  </NavLink>
+                  </button>
                 </>
               ) : (
                 <></>

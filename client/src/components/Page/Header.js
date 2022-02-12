@@ -1,8 +1,20 @@
 import headerLogo from "../../img/header-logo.png";
 import { NavLink } from "react-router-dom";
 import SearchHeader from "../SearchHeader";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getCartItems } from "../../redux/cart/actions";
 
 export default function Header() {
+  const dispatch = useDispatch();
+
+  const { cartItems } = useSelector((store) => store.cartReducer);
+
+  useEffect(() => {
+    dispatch(getCartItems());
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <header className="container">
       <div className="row">
@@ -41,8 +53,12 @@ export default function Header() {
                     to="/cart"
                     className="header-controls-pic header-controls-cart"
                   >
-                    <div className="header-controls-cart-full">1</div>
-                    <div className="header-controls-cart-menu"></div>
+                    {cartItems.length > 0 && (
+                      <div className="header-controls-cart-full">
+                        {cartItems.length}
+                      </div>
+                    )}
+                    {/* <div className="header-controls-cart-menu"></div> */}
                   </NavLink>
                 </div>
               </div>
