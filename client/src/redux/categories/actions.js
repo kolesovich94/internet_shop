@@ -5,6 +5,8 @@ import {
   CHANGE_CATEGORY,
 } from "./types";
 
+import { fetchCategories } from "../../utils/api";
+
 const categoriesLoading = (loading) => ({
   type: CATEGORIES_LOADING,
   payload: { loading },
@@ -25,20 +27,13 @@ export const changeCategory = (id) => ({
   payload: { id },
 });
 
-export const getCategories = () => (dispatch, _getState) => {
+export const getCategories = () => async (dispatch, _getState) => {
   dispatch(categoriesLoading(true));
-  fetch(`${process.env.REACT_APP_BACKEND_URL}/categories`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      return res.json();
-    })
-    .then((data) => {
-      data.unshift({ id: 0, title: "Все" });
-      dispatch(categoriesOk(data));
-    })
-    .catch((error) => {
-      dispatch(categoriesError(error.message));
-    });
+  try {
+    const data = await fetchCategories();
+    data.unshift({ id: 0, title: "Все" });
+    dispatch(categoriesOk(data));
+  } catch (error) {
+    dispatch(categoriesError(error.message));
+  }
 };

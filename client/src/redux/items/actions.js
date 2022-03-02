@@ -6,6 +6,8 @@ import {
   ITEMS_OK,
 } from "./types";
 
+import { fetchItems } from "../../utils/api";
+
 const qs = require("qs");
 
 export const changeSearchCatalog = (search) => ({
@@ -30,7 +32,7 @@ const itemsError = (error) => ({
 
 const itemsOk = (items) => ({ type: ITEMS_OK, payload: { items } });
 
-export const getItems = (offset) => (dispatch, _getState) => {
+export const getItems = (offset) => async (dispatch, _getState) => {
   dispatch(itemsLoading(true));
 
   const paramsObj = qs.parse(window.location.search.slice(1));
@@ -40,17 +42,10 @@ export const getItems = (offset) => (dispatch, _getState) => {
     offset: offset,
   });
 
-  fetch(`${process.env.REACT_APP_BACKEND_URL}/items?${params}`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      return res.json();
-    })
-    .then((data) => {
-      dispatch(itemsOk(data));
-    })
-    .catch((error) => {
-      dispatch(itemsError(error.message));
-    });
+  try {
+    const data = await fetchItems(params);
+    dispatch(itemsOk(data));
+  } catch (error) {
+    dispatch(itemsError(error.message));
+  }
 };

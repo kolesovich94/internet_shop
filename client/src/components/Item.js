@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeItemId, cleanItemId, getItemId } from "../redux/itemId/actions";
-import { getCartItems, addToCart } from "../redux/cart/actions";
+import { addToCart } from "../redux/cart/actions";
 import Spinner from "../components/Common/Spinner";
 import Error from "../components/Common/Error";
 
@@ -11,11 +11,9 @@ export default function Item() {
 
   const navigate = useNavigate();
 
-  const { item, loading, error, kolvo, size } = useSelector(
+  const { item, loading, error, count, size } = useSelector(
     (store) => store.itemIdReducer
   );
-
-  const { cartItems } = useSelector((store) => store.cartReducer);
 
   let sizesAvalible =
     item && item.sizes ? item.sizes.filter((e) => e.avalible) : [];
@@ -31,18 +29,18 @@ export default function Item() {
     dispatch(changeItemId("size", size));
   };
 
-  const handleChangeKolvo = (znak) => {
-    let newKol = kolvo;
-    if (znak === "+" && kolvo < 10) {
-      newKol++;
-    } else if (znak === "-" && kolvo > 1) {
-      newKol--;
+  const handleChangeKolvo = (sign) => {
+    let newCount = count;
+    if (sign === "+" && count < 10) {
+      newCount++;
+    } else if (sign === "-" && count > 1) {
+      newCount--;
     }
-    dispatch(changeItemId("kolvo", newKol));
+    dispatch(changeItemId("count", newCount));
   };
 
   const handleClickCart = (e) => {
-    dispatch(addToCart(item, size, kolvo));
+    dispatch(addToCart(item, size, count));
     navigate("/cart");
   };
 
@@ -118,7 +116,7 @@ export default function Item() {
                         >
                           -
                         </button>
-                        <span className="btn btn-outline-primary">{kolvo}</span>
+                        <span className="btn btn-outline-primary">{count}</span>
                         <button
                           className="btn btn-secondary"
                           onClick={() => handleChangeKolvo("+")}

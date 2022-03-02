@@ -10,7 +10,7 @@ const initialState = {
   item: {},
   loading: true,
   error: null,
-  kolvo: 1,
+  count: 1,
   size: "",
 };
 
@@ -29,7 +29,7 @@ export default function itemIdReducer(state = initialState, action) {
       const { field, value } = action.payload;
       return { ...state, [field]: value };
     case CLEAN_ITEM_ID:
-      return { ...state, kolvo: initialState.kolvo, size: initialState.size };
+      return { ...state, count: initialState.count, size: initialState.size };
     default:
       return state;
   }

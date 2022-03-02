@@ -23,11 +23,11 @@ export default function cartReducer(state = initialState, action) {
       const fullItog = items.reduce((prev, current) => prev + current.itog, 0);
       return { ...state, cartItems: items, fullItog: fullItog };
     case ADD_TO_CART:
-      const { item, size, kolvo } = action.payload;
+      const { item, size, count } = action.payload;
       let fl = false;
       let aitems = state.cartItems.map((e) => {
         if (e.size === size && e.id === item.id) {
-          e.count += kolvo;
+          e.count += count;
           e.itog = e.count * e.price;
           fl = true;
         }
@@ -36,11 +36,11 @@ export default function cartReducer(state = initialState, action) {
       if (!fl) {
         aitems.push({
           id: item.id,
-          size: size,
-          count: kolvo,
+          size,
+          count,
           title: item.title,
           price: item.price,
-          itog: item.price * kolvo,
+          itog: item.price * count,
         });
       }
       const aitog = aitems.reduce((prev, current) => prev + current.itog, 0);

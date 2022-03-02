@@ -1,4 +1,5 @@
 import { SALES_LOADING, SALES_ERROR, SALES_OK } from "./types";
+import { fetchTopSales } from "../../utils/api";
 
 const salesLoading = (loading) => ({
   type: SALES_LOADING,
@@ -12,19 +13,12 @@ const salesError = (error) => ({
 
 const salesOk = (sales) => ({ type: SALES_OK, payload: { sales } });
 
-export const getSales = () => (dispatch, _getState) => {
+export const getSales = () => async (dispatch, _getState) => {
   dispatch(salesLoading(true));
-  fetch(`${process.env.REACT_APP_BACKEND_URL}/top-sales`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      return res.json();
-    })
-    .then((data) => {
-      dispatch(salesOk(data));
-    })
-    .catch((error) => {
-      dispatch(salesError(error.message));
-    });
+  try {
+    const data = await fetchTopSales();
+    dispatch(salesOk(data));
+  } catch (error) {
+    dispatch(salesError(error.message));
+  }
 };

@@ -6,6 +6,8 @@ import {
   CLEAN_ITEM_ID,
 } from "./types";
 
+import { fetchItemId } from "../../utils/api";
+
 const itemIdLoading = (loading) => ({
   type: ITEM_ID_LOADING,
   payload: { loading },
@@ -28,20 +30,13 @@ export const cleanItemId = () => ({
   payload: {},
 });
 
-export const getItemId = (id) => (dispatch, _getState) => {
+export const getItemId = (id) => async (dispatch, _getState) => {
   dispatch(itemIdLoading(true));
 
-  fetch(`${process.env.REACT_APP_BACKEND_URL}/items/${id}`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      return res.json();
-    })
-    .then((data) => {
-      dispatch(itemIdOk(data));
-    })
-    .catch((error) => {
-      dispatch(itemIdError(error.message));
-    });
+  try {
+    const data = await fetchItemId(id);
+    dispatch(itemIdOk(data));
+  } catch (error) {
+    dispatch(itemIdError(error.message));
+  }
 };
